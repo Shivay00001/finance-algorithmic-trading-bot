@@ -1,50 +1,32 @@
-# Finance Algorithmic Trading Bot
+# Algorithmic Trading Bot — Technical Analysis Engine
 
-Python algorithmic trading bot with CI/CD, Docker, and live dashboard.
+**What it does:** Upload an OHLC CSV and get real technical indicators
+(SMA-20, EMA-12/26, RSI-14 Wilder, MACD 12/26/9, Bollinger Bands 20/2)
+plus deterministic **rule-based** trading signals.
 
-![Language](https://img.shields.io/badge/Language-HTML-blue)
-![Status](https://img.shields.io/badge/Status-Active-success)
-![License](https://img.shields.io/badge/License-MIT-green)
+**What it does NOT do:** It is not AI. It does not predict prices. Signals are
+documented heuristics over past data (see `GET /rules`). Not financial advice.
 
-## 🚀 Overview
+## Run
 
-Welcome to the **Finance Algorithmic Trading Bot** repository. This project is built to deliver a robust and scalable solution tailored to modern development standards.
+```bash
+pip install -r requirements.txt
+uvicorn main:app --port 8000
+```
 
-## ✨ Features
+## API
 
-- **High Performance:** Optimized for speed and efficiency.
-- **Scalable Architecture:** Designed to grow with your needs.
-- **Clean Codebase:** Follows best practices and industry standards.
-- **Secure by Default:** Engineered with security in mind.
+- `GET /health`, `GET /rules` — documented signal rules
+- `POST /indicators` — multipart CSV upload (`date,open,high,low,close,volume`),
+  returns last N rows of indicator values
+- `POST /signals` — same upload, returns per-rule votes + majority final signal
 
-## 🛠️ Prerequisites
+```bash
+curl -F "csv=@sample_data.csv" http://localhost:8000/signals
+```
 
-Ensure you have the following installed in your environment before proceeding:
-- Appropriate runtime/compiler for `HTML`
-- Standard development tools
+## Tests
 
-## 📦 Installation
-
-Follow standard installation steps for `HTML` to set up the project locally:
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Shivay00001/finance-algorithmic-trading-bot.git
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd finance-algorithmic-trading-bot
-   ```
-3. Install dependencies according to the standard `HTML` ecosystem.
-
-## 💻 Usage
-
-Run the project using standard execution commands for `HTML`. Ensure all environment variables and configurations are set prior to execution.
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome! Feel free to check the issues page.
-
-## 📝 License
-
-This project is licensed under standard terms.
+```bash
+pytest -q
+```
