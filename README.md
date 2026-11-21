@@ -1,5 +1,7 @@
 # Algorithmic Trading Bot — Technical Analysis Engine
 
+Built by [VisionQuantech](https://visionquantech.com) — AI agents, apps & tools for small businesses.
+
 **What it does:** Upload an OHLC CSV and get real technical indicators
 (SMA-20, EMA-12/26, RSI-14 Wilder, MACD 12/26/9, Bollinger Bands 20/2)
 plus deterministic **rule-based** trading signals.
